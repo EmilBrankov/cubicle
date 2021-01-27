@@ -5,8 +5,21 @@ const path = require('path');
 const productsData = require('../config/products.json')
 
 
-function getAll() {
-    return productsData;
+function getAll(query) {
+
+    let result = productsData;
+
+    if(query.search) {
+        result = result.filter(x => x.name.toLowerCase().includes(query.search));
+        
+    }
+    if(query.from) {
+        result = result.filter(x => Number(x.level) >= query.from);
+    }
+    if(query.to) {
+        result = result.filter(x => Number(x.level) <= query.to);
+    }
+    return result;
 }
 
 function getOne(id) {
@@ -25,11 +38,17 @@ function create(data, callback) {
     );
 
     productsData.push(cube);
-    console.log(productsData);
+
     fs.writeFile(
         path.join(__dirname, '../config/products.json'),
         JSON.stringify(productsData),
-        callback)
+        callback
+    );
+
+    // return fs.writeFile(
+    //     path.join(__dirname, '../config/products.json'),
+    //     JSON.stringify(productsData),
+    // )
 
 }
 
