@@ -31,6 +31,7 @@ function create(data) {
 }
 
 module.exports = {
-    create
+    create,
+    getAll
 
 };
