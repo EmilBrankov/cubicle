@@ -5,8 +5,8 @@ const aboutController = require('./controllers/aboutController');
 
 const router = Router();
 
-router.use('/about', aboutController)
-router.use('/', productController);
+router.use('/', aboutController)
+router.use('/products', productController);
 router.get('*', (req, res) => {
     res.render('404')
 })
