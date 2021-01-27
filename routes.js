@@ -1,15 +1,12 @@
 const { Router } = require('express');
 
+const productController = require('./controllers/productController');
+const aboutController = require('./controllers/aboutController');
+
 const router = Router();
 
-router.get('/', (req, res) => {
+router.use('/about', aboutController)
+router.use('/', productController);
 
-    res.render('home', {layout: false})
-});
 
-router.get('/create', (req, res) => {
-    
-    res.render('create', {layout: false})
-})
-
-module.exports = router
+module.exports = router;
