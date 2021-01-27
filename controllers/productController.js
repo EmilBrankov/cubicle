@@ -10,6 +10,13 @@ const router = Router();
         res.render('create', {title: 'Create'})
     });
 
+    router.post('/create', (req, res) => {
+        res.send('correct')
+        console.log(req.body);
+
+    })
+
+
     router.get('/details/:id', (req, res) => {
 
         console.log(req.params.id);
