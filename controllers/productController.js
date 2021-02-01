@@ -26,7 +26,7 @@ router.post('/create', validateProduct, (req, res) => {
 
 router.get('/details/:id', (req, res) => {
 
-    let one = productService.getOne(req.params.id)
+    let one = productService.getOne(req.params.id);
 
     res.render('details', { title: 'Product Details', one })
 })

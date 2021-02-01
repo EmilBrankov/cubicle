@@ -1,4 +1,6 @@
-class Cube {
+const Model = require('./Model');
+
+class Cube extends Model{
 
     constructor(id, name, description, image, level) {
         this.id = id;
@@ -7,7 +9,6 @@ class Cube {
         this.image = image;
         this.level = level;
     }
-
 }
 
 module.exports = Cube;
