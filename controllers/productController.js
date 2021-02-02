@@ -1,5 +1,6 @@
 const { Router } = require("express");
 const productService = require('../services/productService');
+const accessoryService = require('../services/accessoryService');
 const { validateProduct } = require('./helpers/productHelpers')
 const router = Router();
 
@@ -17,7 +18,6 @@ router.get('/create', (req, res) => {
 });
 
 router.post('/create', validateProduct, (req, res) => {
-    
     productService.create(req.body)
     .then(() => res.redirect('/products'))
     .catch(() => res.status(500).end());
@@ -27,10 +27,22 @@ router.post('/create', validateProduct, (req, res) => {
 
 router.get('/details/:id', async(req, res) => {
 
-    let one = await productService.getOne(req.params.id);
-    console.log(one);
-    
+    let one = await productService.getOneWithAccessories(req.params.id);
+
+
     res.render('details', { title: 'Product Details', one })
+});
+
+router.get('/:id/attach', async (req, res) => {
+    let one = await productService.getOne(req.params.id);
+    let accessories = await accessoryService.getAllUnattached(one.accessories);
+
+    res.render('attachAccessory', {one, accessories})
+})
+
+router.post('/:id/attach', (req, res) => {
+    productService.attachAccessory(req.params.id, req.body.accessory)
+        .then(() => res.redirect(`/products/details/${req.params.id}`))
 })
 
 module.exports = router;
